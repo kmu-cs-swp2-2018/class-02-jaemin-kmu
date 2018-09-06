@@ -39,7 +39,8 @@ def doScoreDB(scdb):
         elif parse[0] == 'del':
             for p in scdb:
                 if p['Name'] == parse[1]:
-                    scdb.remove(p)    
+                    scdb.remove(p)
+		    break    
 
         elif parse[0] == 'show':
             sortKey ='Name' if len(parse) == 1 else parse[1]
