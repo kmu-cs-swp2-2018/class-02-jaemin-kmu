@@ -22,7 +22,7 @@ def recbinsearch(L, l, u, target):
         elif L[m] < target :
             recbinsearch(L, m + 1, u, target)
         else:
-            recbinsearch(L, l, m + 1, target)
+            recbinsearch(L, l, m - 1, target)
     return idx
 
 numofnbrs = int(input("Enter a number: "))
