@@ -36,6 +36,12 @@ class ScoreDB(QWidget):
         self.btn4 = QPushButton("Inc", self)
         self.btn5 = QPushButton("show", self)
 
+        self.btn1.clicked.connect(self.addDB)
+        self.btn2.clicked.connect(self.delDB)
+        self.btn3.clicked.connect(self.findDB)
+        self.btn4.clicked.connect(self.incDB)
+        self.btn5.clicked.connect(self.showScoreDB)
+
         self.scoredb = []
         self.readScoreDB()
         self.showScoreDB()
@@ -103,12 +109,82 @@ class ScoreDB(QWidget):
         fH.close()
 
     def showScoreDB(self):
-        #self.results = ""
-        for p in sorted(self.scoredb, key=lambda person:person[self.keys]):
+        # self.results = ""
+        self.resultEdit.clear()
+        self.results = ""
+        for p in sorted(self.scoredb, key=lambda person: person[self.keys]):
             for attr in sorted(p):
-                self.results += str(attr) + "=" + str(p[attr]) + "\t"
+                self.results += str(attr) + "=" + str(p[attr]) + str("      ")
             self.results += "\n"
         self.resultEdit.setText(self.results)
+        self.results = ""
+
+    def addDB(self):
+        try:
+            int(self.ageEdit.text()) and int(self.scoreEdit.text())
+
+        except:
+            self.resultEdit.setText("Please Input Integer to Age or Score!")
+
+        else:
+            record = {'Name': self.nameEdit.text(), 'Age': self.ageEdit.text(), 'Score': self.scoreEdit.text()}
+            self.scoredb += [record]
+            self.showScoreDB()
+
+    def delDB(self):
+        self.delcount = 0
+        for i in self.scoredb:
+
+            if i['Name'] == self.nameEdit.text():
+                temp = self.scoredb.index(i)
+                del self.scoredb[temp]
+                self.delcount = 1
+
+        if self.delcount == 0:
+            if self.nameEdit.text() == '':
+                self.resultEdit.setText("Please input Name!")
+
+            else:
+                self.resultEdit.setText("He is Not in here!")
+        else:
+            self.showScoreDB()
+
+    def findDB(self):
+        self.findcount = 0
+        self.resultEdit.clear()
+        for i in self.scoredb:
+            if i['Name'] == self.nameEdit.text():
+                self.findcount = 0
+                self.results += "Name = " + str(i['Name']) + " // " + "Age = " + str(
+                    i['Age']) + " // " + "Score = " + str(i['Score'])
+                self.results += "\n"
+                self.resultEdit.setText(self.results)
+                self.findcount = 1
+
+            if self.findcount == 0:
+                self.resultEdit.setText("He(She) is not in here!")
+
+    def incDB(self):
+        try:
+            int(self.amountEdit.text())
+
+        except:
+            self.resultEdit.setText("Please Input Integer to Score!")
+
+        else:
+            self.k = 0
+            for i in self.scoredb:
+                if i['Name'] == self.nameEdit.text():
+                    temp = int(i["Score"]) + int(self.amountEdit.text())
+                    i["Score"] = str(temp)
+                    self.k = 1
+
+            if self.k == 0:
+                self.resultEdit.setText("He is Not in here!")
+
+            elif self.k == 1:
+                self.showScoreDB()
+
 
 if __name__ == '__main__':    
     app = QApplication(sys.argv)
