@@ -133,7 +133,7 @@ class ScoreDB(QWidget):
 
     def delDB(self):
         self.delcount = 0
-        for i in self.scoredb:
+        for i in self.scoredb[::-1]:
 
             if i['Name'] == self.nameEdit.text():
                 temp = self.scoredb.index(i)
