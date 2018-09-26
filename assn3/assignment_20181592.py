@@ -136,8 +136,7 @@ class ScoreDB(QWidget):
         for i in self.scoredb[::-1]:
 
             if i['Name'] == self.nameEdit.text():
-                temp = self.scoredb.index(i)
-                del self.scoredb[temp]
+                self.scoredb.remove(i)
                 self.delcount = 1
 
         if self.delcount == 0:
