@@ -97,7 +97,6 @@ class HangmanGame(QWidget):
         self.guessedChars.setText(self.guess.displayGuessed())
         self.message.clear()
 
-
     def guessClicked(self):
         guessedChar = self.charInput.text()
         self.charInput.clear()
@@ -114,9 +113,11 @@ class HangmanGame(QWidget):
             return
 
         # 입력한 문자가 대문자라면 소문자로 변경
-        # (아스키 코드표는 빈칸을 취급하지 않기 때문에 이 조건문이 맨 앞에 있으면 오류가 뜸)
-        if 65 <= ord(guessedChar) <= 90:
-            guessedChar = chr(ord(guessedChar) + 32)
+        # (주석 처리된 코드 : 아스키 코드표는 빈칸을 취급하지 않기 때문에 이 조건문이 맨 앞에 있으면 오류가 뜸)
+        #if 65 <= ord(guessedChar) <= 90:
+        #    guessedChar = chr(ord(guessedChar) + 32)
+        if guessedChar.upper():
+            guessedChar = guessedChar.lower()
 
         # 이미 사용한 글자인지를 판단하고, 아닌 경우 메시지 출력, 리턴
         if guessedChar in self.guess.guessedChars:
